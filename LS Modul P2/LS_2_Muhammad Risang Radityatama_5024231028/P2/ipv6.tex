@@ -1,0 +1,93 @@
+\section{Pendahuluan}
+\subsection{Latar Belakang}
+\indent
+Perkembangan zaman dan semakin mudahnya akses internet membuat jumlah pengguna internet aktif di dunia semakin meningkat. Dengan meningkatnya jumlah pengguna internet, maka jumlah perangkat yang terhubung ke internet juga semakin banyak, bahkan setiap satu orang pengguna bisa jadi juga memiliki lebih dari satu perangkat yang aktif terhubung ke internet. Untuk setiap perangkat yang terhubung ke jaringan, maka dierlukan sebuah alamat IP unik sebagai identitas perangkat, hal ini tentu saja juga berlaku ke internet yang pada dasarnya adalah sebuah jaringan komputer besar yang menghubungkan seluruh dunia. Karena setiap perangkat memerlukan alamat IP yang unik, maka dengan setiap bertambahnya perangkat terhubung ke internet maka semakin sedikit pula alamat IP publik yang bisa diberikan di internet. Protokol IPv4 yang memiliki format alamat IP 32-bit secara teori mampu memberikan 4.294.967.296 alamat IP unik. Namun, pada awal tahun 2025 saja pengguna internet aktif dunia telah mencapai 5,5 miliar pengguna dan data tersebut belum termasuk perangkat-perangkat IoT yang tentu saja juga perlu internet untuk beroperasi.
+\\
+\indent
+Semakin banyaknya jumlah perangkat yang terhubung ke internet membuat kapasitas IP publik yang bisa disediakan oleh IPv4 semakin lama semakin sedikit dan lama-kelamaan akan habis. Maka, untuk menjawab masalah tersebut lahirlah protokol internet IPv6. IPv6 memiliki alamat IP dengan format 128-bit, yang artinya IPv6 secara teori dapat memberikan 340 undesiliun ($3,4*10^{38}$) alamat IP unik. Dengan kapasitas alamat IP yang sangat besar, IPv6 dapat menyelesaikan masalah menipisnya alamat IP publik pada protokol IPv4, dan jaringan di masa depan juga akan beralih ke IPv6 walau IPv4 juga masih dipertahakan karena alasan kompatibilitas, sehingga selain memahami IPv4 pemahaman akan IPv6 juga diperlukan. Maka dari itu, untuk lebih memahami mengenai protokol internet IPv6, dilakukan praktikum routing IPv6.
+
+\subsection{Dasar Teori}
+\indent
+IPv6 merupakan protokol internet (IP) versi keenam dan yang paling umum digunakan kedua setelah IPv4. IPv6 terdiri atas nilai 128-bit yang dipisahkan menjadi 8 bagian yang dipisahkan oleh titik, dengan masing-masing bagian terdiri atas 4 digit heksadesimal (16-bit). Seperti halnya IPv4, IPv6 juga berperan dalam memberikan alamat logis berupa alamat IP pada perangkat-perangkat di dalam jaringan, sehingga komunikasi antar perangkat di dalam jaringan dapat dilakukan dengan menggunakan alamat IP sebagai identitas perangkat. Format alamat IP pada IPv6 dibagi menjadi 3 bagian, yaitu global routing prefix, subnet ID, dan host ID. 48-bit pertama adalah milik global routing prefix yang merupakan alamat jaringan dalam jaringan yang lebih besar (umumnya diberikan oleh ISP), 16-bit berikutnya adalah subnet ID yang merupakan alamat subnet jaringan, dan 64-bit sisanya adalah host ID yang merupakan identitas unik untuk setiap perangkat atau host dalam jaringan. Routing dan subnetting pada IPv6 hampir sama dengan melakukan routing dan subnetting pada IPv4 dengan menggunakan notasi CIDR, hanya saja bedanya IPv6 menggunakan 128-bit sedangkan IPv4 32-bit, sehingga prefix IPv6 bisa lebih besar dan subnetnya bisa jauh lebih banyak dibandingkan IPv4.
+
+%===========================================================%
+\section{Tugas Pendahuluan}
+\begin{enumerate}
+	\item IPv6 merupakan protokol internet (IP) versi keenam. Perbedaan IPv6 dengan IPv4 terletak pada ukuran alamatnya. IPv6 memiliki ukuran alamat sebesar 128-bit sedangkan IPv4 memiliki ukuran alamat sebesar 64-bit.
+	
+	\item Alamat awal: 2001:db8::/32\\
+	Pembagian 4 subnet dengan prefix /64:\\
+	Subnet A: 2001:db8:0000:0000::/64\\
+	Subnet B: 2001:db8:0000:0001::/64\\
+	Subnet C: 2001:db8:0000:0002::/64\\
+	Subnet D: 2001:db8:0000:0003::/64\\
+	Alokasi alamat IPv6 untuk masing-masing subnet:\\
+	Subnet A: 2001:db8:0000:0000:: - 2001:db8:0000:0000:ffff:ffff:ffff:ffff\\
+	Subnet B: 2001:db8:0000:0001:: - 2001:db8:0000:0001:ffff:ffff:ffff:ffff\\
+	Subnet C: 2001:db8:0000:0002:: - 2001:db8:0000:0002:ffff:ffff:ffff:ffff\\
+	Subnet D: 2001:db8:0000:0003:: - 2001:db8:0000:0003:ffff:ffff:ffff:ffff\\
+	
+	\item Alamat IPv6 dan konfigurasi IP antarmuka router:\\
+	ether1: 2001:db8:0000:0000::1\\
+	ether2: 2001:db8:0000:0001::1\\
+	ether3: 2001:db8:0000:0002::1\\
+	ether4: 2001:db8:0000:0003::1\\
+	
+	\item IP table untuk Subnet A:\\
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		Destination & Gateway & Interface\\
+		\hline
+		2001:db8:0000:0000:: & on-link & ether1 \\
+		\hline
+		2001:db8:0000:0001:: & 2001:db8:0000:0000::1 & ether2\\
+		\hline
+		2001:db8:0000:0002:: & 2001:db8:0000:0000::1 & ether3\\
+		\hline
+		2001:db8:0000:0003:: & 2001:db8:0000:0000::1 & ether4\\
+		\hline
+	\end{tabular}\\
+	IP table untuk Subnet B:\\
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		Destination & Gateway & Interface\\
+		\hline
+		2001:db8:0000:0000:: & 2001:db8:0000:0001::1 & ether1 \\
+		\hline
+		2001:db8:0000:0001:: & on-link & ether2\\
+		\hline
+		2001:db8:0000:0002:: & 2001:db8:0000:0001::1 & ether3\\
+		\hline
+		2001:db8:0000:0003:: & 2001:db8:0000:0001::1 & ether4\\
+		\hline
+	\end{tabular}\\
+	IP table untuk Subnet C:\\
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		Destination & Gateway & Interface\\
+		\hline
+		2001:db8:0000:0000:: & 2001:db8:0000:0002::1 & ether1 \\
+		\hline
+		2001:db8:0000:0001:: & 2001:db8:0000:0002::1 & ether2\\
+		\hline
+		2001:db8:0000:0002:: & on-link & ether3\\
+		\hline
+		2001:db8:0000:0003:: & 2001:db8:0000:0002::1 & ether4\\
+		\hline
+	\end{tabular}\\
+	IP table untuk Subnet D:\\
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		Destination & Gateway & Interface\\
+		\hline
+		2001:db8:0000:0000:: & 2001:db8:0000:0003::1 & ether1 \\
+		\hline
+		2001:db8:0000:0001:: & 2001:db8:0000:0003::1 & ether2\\
+		\hline
+		2001:db8:0000:0002:: & 2001:db8:0000:0003::1 & ether3\\
+		\hline
+		2001:db8:0000:0003:: & on-link & ether4\\
+		\hline
+	\end{tabular}\\
+	\item Routing statis berfungsi untuk memberikan alamat IP unik kepada perangkat-perangkat yang terhubung di dalam jaringan secara manual dan tidak akan berubah sama sekali selama konfigurasinya tidak diubah dan selama router tidak direset ke setelan awal, sehingga alamat-alamat yang diberikan melalui routing statis akan tetap sama selamanya. Manfaat dari routing statis adalah membuat maintenance perangkat-perangkat yang terhubung ke dalam jaringan dan membutuhkan alamat yang pasti seperti server dan alat IoT menjadi lebih mudah karena alamat IP-nya mudah ditebak dan tidak berubah mulai dari awal dikonfigurasi. Selain routing statis, pada IPv6 juga dapat dilakukan routing dinamis. Routing dinamis sebaiknya dilakukan bila ada banyak perangkat yang terhubung dengan jaringan dan perangkat-perangkat tersebut bukanlah perangkat yang harus tetap berada di dalam jaringan tersebut, misalnya perangkat pribadi pengguna yang digunakan untuk mengakses internet seperti handphone dan laptop.
+\end{enumerate}
