@@ -1,3 +1,5 @@
 # Kelompok_17_Jarkom
-repo praktikum jarkom kelompok 17 <br />
-tolong jangan telat push ygy
+Anggota Kelompok:<br/>
+1. Muhammad Risang Radityatama - 5024231028 <br/>
+2. Muhammad Zidane Faiq Sidqi - 5024231040 <br/>
+3. Andriy Shevtiyan - 5024231080 <br/>
